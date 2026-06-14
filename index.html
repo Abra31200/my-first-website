@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abraham Meless — Portfolio Ingénieur Embarqué</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void:    #080c14;
+    --deep:    #0d1421;
+    --panel:   #111827;
+    --border:  #1e293b;
+    --muted:   #334155;
+    --text:    #e2e8f0;
+    --sub:     #94a3b8;
+    --accent:  #f97316;
+    --accent2: #fb923c;
+    --blue:    #3b82f6;
+    --green:   #22c55e;
+    --red:     #ef4444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(8,12,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-size: 14px; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; color: var(--sub); text-decoration: none;
+    letter-spacing: 0.05em; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 80px 80px;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(249,115,22,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--accent); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px); color: var(--accent);
+    font-weight: 500; margin-bottom: 24px;
+  }
+  .hero-desc {
+    font-size: 15px; color: var(--sub); max-width: 480px;
+    line-height: 1.75; margin-bottom: 40px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; padding: 5px 12px;
+    border: 1px solid var(--border); border-radius: 4px;
+    color: var(--sub); letter-spacing: 0.05em;
+  }
+  .tag.hot { border-color: rgba(249,115,22,0.4); color: var(--accent); }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    background: var(--accent); color: var(--void);
+    font-weight: 700; font-size: 14px; letter-spacing: 0.05em;
+    text-decoration: none; border-radius: 6px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(249,115,22,0.35); }
+
+  .hero-visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rocket-img {
+    width: 100%; max-width: 380px;
+    filter: drop-shadow(0 0 60px rgba(249,115,22,0.25));
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  .hero-badge {
+    position: absolute; bottom: -20px; right: 0;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--green); line-height: 1.8;
+  }
+  .hero-badge .dot { color: var(--green); }
+
+  section { padding: 100px 80px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent); letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent);
+  }
+  h2 {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 16px; line-height: 1.1;
+  }
+  .section-intro {
+    font-size: 16px; color: var(--sub); max-width: 620px;
+    line-height: 1.75; margin-bottom: 64px;
+  }
+
+  .about { background: var(--deep); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+  }
+  .about-text p {
+    font-size: 15px; color: var(--sub); line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .stat-card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px;
+  }
+  .stat-num {
+    font-size: 36px; font-weight: 700; color: var(--accent);
+    line-height: 1; margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 12px; color: var(--sub); letter-spacing: 0.05em;
+  }
+
+  .projet { background: var(--void); }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 28px; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 32px;
+    margin-bottom: 80px;
+    position: relative;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    width: 56px; height: 56px;
+    background: var(--panel); border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    flex-shrink: 0; z-index: 1;
+    transition: border-color .3s, background .3s;
+  }
+  .step:hover .step-num {
+    border-color: var(--accent);
+    background: rgba(249,115,22,0.1);
+  }
+  .step-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 12px; letter-spacing: -0.01em;
+  }
+  .step-desc {
+    font-size: 14px; color: var(--sub); line-height: 1.75;
+    margin-bottom: 24px; max-width: 680px;
+  }
+  .step-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 16px;
+  }
+  .step-photo {
+    aspect-ratio: 4/3;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: transform .2s, border-color .2s;
+  }
+  .step-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .3s;
+  }
+  .step-photo:hover { border-color: var(--accent); transform: scale(1.02); }
+  .step-photo:hover img { transform: scale(1.05); }
+
+  .code-block {
+    background: #0d1117; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-top: 20px;
+  }
+  .code-header {
+    background: var(--panel); padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .code-fname {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--sub); margin-left: auto;
+  }
+  pre {
+    padding: 20px; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; line-height: 1.7; color: #c9d1d9;
+    max-height: 300px;
+  }
+
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .cm { color: #8b949e; }
+  .num { color: #79c0ff; }
+  .str { color: #a5d6ff; }
+
+  .highlight-box {
+    background: rgba(249,115,22,0.06);
+    border: 1px solid rgba(249,115,22,0.2);
+    border-radius: 10px; padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .highlight-box p {
+    font-size: 13px; color: var(--sub); line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--accent); }
+
+  .autres { background: var(--deep); }
+  .projets-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .projet-card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px;
+    transition: border-color .2s, transform .2s;
+  }
+  .projet-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .projet-icon { font-size: 28px; margin-bottom: 16px; }
+  .projet-name { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .projet-desc { font-size: 13px; color: var(--sub); line-height: 1.7; margin-bottom: 20px; }
+  .projet-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .projet-stack span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; padding: 3px 8px;
+    border: 1px solid var(--border); border-radius: 3px; color: var(--sub);
+  }
+
+  .contact { background: var(--void); text-align: center; }
+  .contact-wrap { max-width: 560px; margin: 0 auto; }
+  .contact h2 { margin-bottom: 16px; }
+  .contact p { color: var(--sub); font-size: 15px; margin-bottom: 40px; }
+  .contact-links {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: transform .2s;
+  }
+  .contact-link:hover { transform: translateY(-2px); }
+  .contact-link.primary { background: var(--accent); color: var(--void); }
+  .contact-link.secondary {
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 90vh;
+    border-radius: 8px; object-fit: contain;
+  }
+
+  footer {
+    text-align: center; padding: 32px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .hero-visual { display: none; }
+    section { padding: 72px 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 48px 1fr; gap: 20px; }
+    h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AM / Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#projet">Projet fusée</a></li>
+    <li><a href="#autres">Autres projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Ingénieur systèmes embarqués</div>
+    <h1>Abraham<br>Meless</h1>
+    <div class="hero-sub">ISEP Paris · Systèmes Embarqués & Robotique</div>
+    <p class="hero-desc">
+      Étudiant ingénieur en 2e année de CPGE TSI, admissible à l'ISEP Paris.
+      Je conçois des systèmes embarqués complets — de l'électronique au firmware —
+      avec une passion pour l'aéronautique, le spatial et la défense.
+    </p>
+    <div class="hero-tags">
+      <span class="tag hot">C / C++</span>
+      <span class="tag hot">Arduino / STM32</span>
+      <span class="tag hot">Régulateur PID</span>
+      <span class="tag">SolidWorks</span>
+      <span class="tag">KiCad</span>
+      <span class="tag">Python</span>
+      <span class="tag">WiFi / BLE</span>
+    </div>
+    <a href="#projet" class="hero-cta">Voir le projet fusée →</a>
+  </div>
+  <div class="hero-visual">
+    <img src="IMG_8136.jpeg" alt="Fusée 3D SolidWorks" class="rocket-img">
+    <div class="hero-badge">
+      <span class="dot">●</span> Disponible — Septembre 2026<br>
+      <span class="dot">●</span> Alternance 3 ans · ISEP Paris<br>
+      <span class="dot">●</span> Aéronautique · Défense · Spatial
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-label">Profil</div>
+  <h2>De la physique au firmware</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Formé en Classes Préparatoires TSI (Technologie et Sciences Industrielles)
+        au lycée Aux Lazaristes à Lyon, j'intègre l'<strong>ISEP Paris</strong> en
+        septembre 2026 en cycle ingénieur, spécialisation
+        <strong>Systèmes Embarqués & Robotique</strong>.
+      </p>
+      <p>
+        Ce qui me définit : je <strong>construis des projets complets de A à Z</strong>,
+        de la conception mécanique sur SolidWorks jusqu'au firmware en C sur Arduino,
+        en passant par la fabrication physique des pièces. Je ne sépare pas
+        le hardware du software — je les fais fonctionner ensemble.
+      </p>
+      <p>
+        Mon objectif : contribuer à des projets R&D dans les secteurs
+        <strong>aéronautique, spatial ou défense</strong>, là où les systèmes
+        embarqués doivent être fiables à 100 % dans des conditions extrêmes.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Ans de projets Arduino en autonomie</div></div>
+      <div class="stat-card"><div class="stat-num">3D</div><div class="stat-label">Pièces conçues & imprimées sur SolidWorks</div></div>
+      <div class="stat-card"><div class="stat-num">PID</div><div class="stat-label">Régulateur implémenté sur système réel</div></div>
+      <div class="stat-card"><div class="stat-num">WiFi<br><span style="font-size:20px">+ BLE</span></div><div class="stat-label">Protocoles de comm. embarqués maîtrisés</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="projet" id="projet">
+  <div class="section-label">Projet TIPE 2025 – 2026</div>
+  <h2>Fusée à stabilisation active par ailerons</h2>
+  <p class="section-intro">
+    Conception d'un système d'asservissement autonome pour stabiliser une fusée
+    lors de son décollage, en corrigeant les perturbations aérodynamiques en temps réel
+    via un régulateur PID et un capteur inertiel MPU-6050. Réalisé entièrement de façon autonome
+    en 2 ans de CPGE, de la recherche aux tests en soufflerie.
+  </p>
+
+  <div class="timeline">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-tag">Recherche & Conception</div>
+        <div class="step-title">Comprendre la physique d'une fusée</div>
+        <p class="step-desc">
+          Première étape : comprendre pourquoi et comment une fusée peut se déstabiliser
+          lors du décollage. Étude du <strong>centre de gravité</strong>, du
+          <strong>centre de poussée</strong> et du couple de rappel qui permet à une
+          fusée bien conçue de naturellement revenir à la verticale.
+          L'objectif : ajouter un asservissement actif sur l'axe Y pour corriger
+          les perturbations du vent.
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8131.jpeg" alt="Recherche au tableau">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-tag">Modélisation 3D — SolidWorks</div>
+        <div class="step-title">Conception des pièces mécaniques</div>
+        <p class="step-desc">
+          Modélisation 100 % originale de toutes les pièces sur SolidWorks :
+          les <strong>ailerons</strong> avec leur axe de rotation intégré,
+          les <strong>blocs support du servomoteur</strong> conçus pour s'emboîter
+          précisément dans le tube PVC, et le <strong>cône de la fusée</strong>
+          dimensionné pour respecter les critères de stabilité aérodynamique.
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8135.jpeg" alt="Aileron SolidWorks">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8142.jpeg" alt="Blocs support servomoteur imprimés">
+          </div>
+        </div>
+        <div class="highlight-box">
+          <p>
+            <strong>Note :</strong> Une structure complète de fusée avait également été
+            modélisée intégralement sur SolidWorks (vue 3D en hero), mais refusée
+            pour l'impression par les enseignants pour des raisons de contraintes matière.
+            Cela a conduit à trouver une solution alternative plus ingénieuse avec
+            un tube PVC recyclé.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-tag">Fabrication & Assemblage</div>
+        <div class="step-title">De l'impression 3D à la fusée assemblée</div>
+        <p class="step-desc">
+          Impression FDM des pièces conçues sur SolidWorks. Usinage du tube PVC
+          à la <strong>fraiseuse</strong> pour créer les logements des tiges des ailerons.
+          Assemblage du servomoteur Hitec FS5103R dans ses blocs imprimés,
+          insertion dans le tube PVC. Les deux ailerons sont reliés par une
+          <strong>tige métallique</strong> : l'un connecté au servo, l'autre
+          esclave — une solution mécanique ingénieuse pour doubler l'effet
+          avec un seul moteur.
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8132.jpeg" alt="Usinage fraiseuse">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8140.jpeg" alt="Cône imprimé 3D">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8137.jpeg" alt="Servo dans tube PVC">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8143.jpeg" alt="Fusée assemblée avec ailerons">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-tag">Électronique & Contrôle à distance</div>
+        <div class="step-title">Interface WiFi & Bluetooth pour contrôle manuel</div>
+        <p class="step-desc">
+          Avant l'asservissement autonome, développement d'une
+          <strong>interface de contrôle à distance</strong> pour valider le
+          fonctionnement mécanique. Page HTML avec joystick tactile hébergée
+          sur MacBook via Python HTTP server, connectée à l'Arduino via WiFi
+          (adresse IP 192.168.4.1). Puis portage en <strong>Bluetooth BLE</strong>
+          avec un protocole custom (commande -100 à +100, stop d'urgence,
+          timeout de sécurité automatique).
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8134.jpeg" alt="Interface joystick WiFi">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8133.jpeg" alt="Terminal MacBook serveur Python">
+          </div>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ef4444"></div>
+            <div class="code-dot" style="background:#f59e0b"></div>
+            <div class="code-dot" style="background:#22c55e"></div>
+            <span class="code-fname">servo_ble.ino — extrait</span>
+          </div>
+          <pre><span class="cm">// UUID du service BLE</span>
+<span class="kw">BLEService</span> servoService(<span class="str">"19B10000-E8F2-537E-4F6C-D104768A1214"</span>);
+<span class="kw">BLEIntCharacteristic</span> cmdChar(<span class="str">"19B10001..."</span>, BLERead | BLEWrite);
+<span class="kw">BLEByteCharacteristic</span> stopChar(<span class="str">"19B10002..."</span>, BLERead | BLEWrite);
+
+<span class="kw">const int</span> SERVO_STOP = <span class="num">87</span>;  <span class="cm">// valeur neutre calibrée</span>
+<span class="kw">const int</span> DEAD_ZONE  = <span class="num">8</span>;   <span class="cm">// zone morte autour de 0°</span>
+<span class="kw">const unsigned long</span> TIMEOUT_MS = <span class="num">700</span>; <span class="cm">// stop auto si pas de cmd</span>
+
+<span class="fn">void</span> applyServoCommand(<span class="fn">int</span> cmd) {
+  <span class="kw">if</span> (emergencyStop) { stopServo(); <span class="kw">return</span>; }
+  <span class="kw">if</span> (cmd > -DEAD_ZONE && cmd < DEAD_ZONE) { stopServo(); <span class="kw">return</span>; }
+  <span class="fn">int</span> servoValue = (cmd > <span class="num">0</span>)
+    ? map(cmd, <span class="num">0</span>, <span class="num">100</span>, SERVO_STOP, <span class="num">180</span>)
+    : map(cmd, <span class="num">-100</span>, <span class="num">0</span>, <span class="num">0</span>, SERVO_STOP);
+  servo360.write(clamp(servoValue, <span class="num">0</span>, <span class="num">180</span>));
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-tag">Asservissement autonome — MPU-6050 + PID</div>
+        <div class="step-title">La fusée se stabilise seule</div>
+        <p class="step-desc">
+          Intégration du capteur inertiel <strong>MPU-6050</strong> sur la fusée,
+          calibration sur l'axe Y (axe de perturbation choisi). Implémentation
+          d'un <strong>régulateur proportionnel</strong> : quand la fusée s'incline
+          d'un angle θ, les ailerons s'inclinent du même angle dans le même sens,
+          créant une résistance aérodynamique qui force le redressement.
+          Réglage itératif de la vitesse de réaction pour éviter les oscillations.
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8138.jpeg" alt="MPU-6050 sur la fusée">
+          </div>
+        </div>
+        <div class="highlight-box">
+          <p>
+            <strong>Principe physique :</strong> Si la fusée bascule vers le bas (angle négatif),
+            les ailerons basculent aussi vers le bas → la résistance du vent frappe l'aileron
+            et force la structure à se redresser. Pareil dans l'autre sens.
+            Un système simple, mais efficace sur l'axe étudié.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <div class="step-tag">Validation expérimentale</div>
+        <div class="step-title">Tests en soufflerie industrielle</div>
+        <p class="step-desc">
+          Tests finaux dans la soufflerie du lycée — un équipement industriel
+          générant des vitesses de vent importantes. La fusée est positionnée
+          sur un axe de rotation en Y pour simuler les perturbations de trajectoire
+          lors du décollage. Résultat : l'Arduino avec le MPU-6050 réagit
+          <strong>de façon entièrement autonome</strong>, les ailerons se
+          corrigent automatiquement et la fusée se redresse.
+          Plusieurs itérations de réglage pour affiner la réactivité.
+        </p>
+        <div class="step-photos">
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8141.jpeg" alt="Fusée dans la soufflerie">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8153.jpeg" alt="Soufflerie vue d'ensemble">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8140.jpeg" alt="Ventilateur industriel">
+          </div>
+          <div class="step-photo" onclick="openLightbox(this)">
+            <img src="IMG_8139.jpeg" alt="Arduino et electronique en soufflerie">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="autres" id="autres">
+  <div class="section-label">Autres réalisations</div>
+  <h2>Projets personnels</h2>
+  <p class="section-intro">
+    En dehors du projet fusée, plusieurs systèmes embarqués conçus et réalisés
+    de façon autonome depuis 2023.
+  </p>
+  <div class="projets-grid">
+    <div class="projet-card">
+      <div class="projet-icon">🌤️</div>
+      <div class="projet-name">Station météo autonome</div>
+      <p class="projet-desc">
+        Acquisition de température, pression et humidité via capteurs DHT22 et BMP280.
+        Affichage OLED temps réel, transmission des données en UART.
+        Système 100 % autonome et portable.
+      </p>
+      <div class="projet-stack">
+        <span>Arduino</span><span>DHT22</span><span>BMP280</span>
+        <span>OLED</span><span>UART</span><span>C/C++</span>
+      </div>
+    </div>
+    <div class="projet-card">
+      <div class="projet-icon">🦾</div>
+      <div class="projet-name">Bras robotique 3 axes WiFi</div>
+      <p class="projet-desc">
+        Bras robotique 3 axes piloté via WiFi depuis smartphone.
+        Interface de contrôle HTML avec joystick tactile hébergée sur Arduino.
+        Pilotage de servomoteurs avec contrôle de vitesse en temps réel.
+      </p>
+      <div class="projet-stack">
+        <span>Arduino WiFi</span><span>HTML/JS</span><span>Servos</span>
+        <span>PWM</span><span>Python</span>
+      </div>
+    </div>
+    <div class="projet-card">
+      <div class="projet-icon">🔌</div>
+      <div class="projet-name">Conception PCB sous KiCad</div>
+      <p class="projet-desc">
+        Conception de circuits imprimés PCB pour prototypage électronique.
+        Schématique, routage des pistes, génération des fichiers Gerber
+        pour fabrication. Intégration de composants discrets et connecteurs.
+      </p>
+      <div class="projet-stack">
+        <span>KiCad</span><span>PCB</span><span>Schématique</span>
+        <span>Gerber</span><span>Électronique</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div class="section-label" style="justify-content:center">Contact</div>
+    <h2>Disponible dès septembre 2026</h2>
+    <p>
+      Je recherche une alternance de 3 ans en systèmes embarqués,
+      électronique ou avionique dans les secteurs aéronautique, spatial ou défense.
+      Rythme 3 jours entreprise / 2 jours école.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:melessabraham31@gmail.com" class="contact-link primary">✉ melessabraham31@gmail.com</a>
+      <a href="https://linkedin.com/in/abraham-meless-85472b26a" target="_blank" class="contact-link secondary">LinkedIn →</a>
+      <a href="https://github.com/Abra31200" target="_blank" class="contact-link secondary">GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Abraham Meless · ISEP Paris · Systèmes Embarqués & Robotique · Alternance Septembre 2026
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  function openLightbox(el) {
+    const src = el.querySelector('img').src;
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
